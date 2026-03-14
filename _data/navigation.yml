@@ -1,10 +1,8 @@
 - title: Patch Notes
-  icon: "📋"
   url: /pages/patch-notes/
   items: auto
 
 - title: Resources
-  icon: "📚"
   url: /pages/resources/
   items:
     - title: Official Docs
@@ -15,7 +13,6 @@
       url: /pages/resources/mcp-servers/
 
 - title: Tips & Tricks
-  icon: "💡"
   url: /pages/tips/
   items:
     - title: Productivity
@@ -24,7 +21,6 @@
       url: /pages/tips/workflows/
 
 - title: Cheatsheet
-  icon: "📄"
   url: /pages/cheatsheet/
   items:
     - title: Commands
