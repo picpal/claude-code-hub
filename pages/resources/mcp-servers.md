@@ -2,7 +2,7 @@
 layout: post
 title: MCP Servers
 description: Model Context Protocol 서버 설정 가이드
-permalink: /pages/resources/mcp-servers
+permalink: /pages/resources/mcp-servers/
 ---
 
 ## MCP란?

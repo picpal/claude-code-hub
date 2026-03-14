@@ -2,7 +2,7 @@
 layout: post
 title: Settings
 description: Claude Code 설정 옵션 정리
-permalink: /pages/cheatsheet/settings
+permalink: /pages/cheatsheet/settings/
 ---
 
 ## 설정 파일 위치

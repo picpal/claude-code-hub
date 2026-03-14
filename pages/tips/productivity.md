@@ -2,7 +2,7 @@
 layout: post
 title: Productivity Tips
 description: Claude Code 생산성을 높이는 팁
-permalink: /pages/tips/productivity
+permalink: /pages/tips/productivity/
 ---
 
 ## CLAUDE.md 활용하기

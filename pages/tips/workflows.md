@@ -2,7 +2,7 @@
 layout: post
 title: Workflow Tips
 description: 효율적인 Claude Code 워크플로우
-permalink: /pages/tips/workflows
+permalink: /pages/tips/workflows/
 ---
 
 ## Git 워크플로우

@@ -2,7 +2,7 @@
 layout: post
 title: Official Docs
 description: Claude Code 공식 문서 및 관련 링크
-permalink: /pages/resources/official-docs
+permalink: /pages/resources/official-docs/
 ---
 
 ## 공식 문서

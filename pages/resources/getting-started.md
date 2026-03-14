@@ -2,7 +2,7 @@
 layout: post
 title: Getting Started
 description: Claude Code를 처음 사용하는 분을 위한 시작 가이드
-permalink: /pages/resources/getting-started
+permalink: /pages/resources/getting-started/
 ---
 
 ## 설치

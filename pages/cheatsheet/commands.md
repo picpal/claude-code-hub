@@ -2,7 +2,7 @@
 layout: post
 title: Commands
 description: Claude Code CLI 명령어 정리
-permalink: /pages/cheatsheet/commands
+permalink: /pages/cheatsheet/commands/
 ---
 
 ## Slash Commands

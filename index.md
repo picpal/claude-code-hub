@@ -26,22 +26,22 @@ title: Home
 <div class="home-section">
   <h2>🚀 Quick Links</h2>
   <div class="quick-links">
-    <a href="{{ '/pages/resources/getting-started' | relative_url }}" class="quick-link-card">
+    <a href="{{ '/pages/resources/getting-started/' | relative_url }}" class="quick-link-card">
       <span class="card-icon">📚</span>
       <span class="card-title">Getting Started</span>
       <span class="card-desc">Claude Code 시작 가이드</span>
     </a>
-    <a href="{{ '/pages/cheatsheet/commands' | relative_url }}" class="quick-link-card">
+    <a href="{{ '/pages/cheatsheet/commands/' | relative_url }}" class="quick-link-card">
       <span class="card-icon">⌨️</span>
       <span class="card-title">Commands</span>
       <span class="card-desc">CLI 명령어 정리</span>
     </a>
-    <a href="{{ '/pages/tips/productivity' | relative_url }}" class="quick-link-card">
+    <a href="{{ '/pages/tips/productivity/' | relative_url }}" class="quick-link-card">
       <span class="card-icon">💡</span>
       <span class="card-title">Tips & Tricks</span>
       <span class="card-desc">생산성을 높이는 팁</span>
     </a>
-    <a href="{{ '/pages/cheatsheet/shortcuts' | relative_url }}" class="quick-link-card">
+    <a href="{{ '/pages/cheatsheet/shortcuts/' | relative_url }}" class="quick-link-card">
       <span class="card-icon">🔑</span>
       <span class="card-title">Shortcuts</span>
       <span class="card-desc">단축키 모음</span>

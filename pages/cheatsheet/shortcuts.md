@@ -2,7 +2,7 @@
 layout: post
 title: Shortcuts
 description: Claude Code 키보드 단축키 모음
-permalink: /pages/cheatsheet/shortcuts
+permalink: /pages/cheatsheet/shortcuts/
 ---
 
 ## 기본 단축키
