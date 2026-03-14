@@ -1,0 +1,41 @@
+@media (max-width: $mobile-breakpoint) {
+  .site-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -$sidebar-width;
+    top: 0;
+    z-index: 1000;
+    width: $sidebar-width;
+    transition: left 0.3s ease;
+    box-shadow: none;
+
+    &.open {
+      left: 0;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.1);
+    }
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  .content {
+    padding: $spacing-xl $spacing-md;
+    padding-top: 72px;
+  }
+
+  .home-hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .quick-links {
+    grid-template-columns: 1fr;
+  }
+}

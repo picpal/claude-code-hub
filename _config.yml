@@ -1,0 +1,35 @@
+title: Claude Code Hub
+description: "Claude Code 패치노트, 리소스, 팁을 한곳에서"
+baseurl: "/claude-code-hub"
+url: "https://picpal.github.io"
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+defaults:
+  - scope:
+      path: "pages/patch-notes"
+    values:
+      layout: post
+      category: patch-notes
+  - scope:
+      path: "pages/resources"
+    values:
+      layout: post
+      category: resources
+  - scope:
+      path: "pages/tips"
+    values:
+      layout: post
+      category: tips
+  - scope:
+      path: "pages/cheatsheet"
+    values:
+      layout: post
+      category: cheatsheet
+
+plugins:
+  - jekyll-seo-tag

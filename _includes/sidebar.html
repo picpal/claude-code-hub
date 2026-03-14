@@ -1,0 +1,42 @@
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <a href="{{ '/' | relative_url }}" class="site-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">Claude Code Hub</span>
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    {% for section in site.data.navigation %}
+    <div class="nav-section">
+      <a href="{{ section.url | relative_url }}" class="nav-section-title {% if page.url == section.url %}active{% endif %}">
+        <span class="nav-icon">{{ section.icon }}</span>
+        {{ section.title }}
+      </a>
+      {% if section.items == "auto" %}
+        {% assign notes = site.pages | where_exp: "p", "p.url contains '/pages/patch-notes/'" | where_exp: "p", "p.url != '/pages/patch-notes/'" | sort: "date" | reverse %}
+        {% if notes.size > 0 %}
+        <ul class="nav-items">
+          {% for note in notes limit:10 %}
+          <li>
+            <a href="{{ note.url | relative_url }}" {% if page.url == note.url %}class="active"{% endif %}>
+              {{ note.title }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      {% elsif section.items %}
+      <ul class="nav-items">
+        {% for item in section.items %}
+        <li>
+          <a href="{{ item.url | relative_url }}" {% if page.url contains item.url %}class="active"{% endif %}>
+            {{ item.title }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </nav>
+</aside>

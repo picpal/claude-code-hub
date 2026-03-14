@@ -1,0 +1,12 @@
+---
+layout: default
+---
+<div class="list-page">
+  <h1 class="list-title">{{ page.title }}</h1>
+  {% if page.description %}
+  <p class="list-description">{{ page.description }}</p>
+  {% endif %}
+  <div class="list-content">
+    {{ content }}
+  </div>
+</div>
