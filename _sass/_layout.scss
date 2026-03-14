@@ -248,9 +248,19 @@ body {
   }
 
   .card-icon {
-    font-size: 1.5rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: $spacing-sm;
-    display: block;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      fill: none;
+    }
   }
 
   .card-title {
