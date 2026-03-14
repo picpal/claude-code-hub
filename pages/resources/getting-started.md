@@ -5,6 +5,15 @@ description: Claude Code를 처음 사용하는 분을 위한 시작 가이드
 permalink: /pages/resources/getting-started/
 ---
 
+## 목차
+- [Claude Code 입문 치트시트](#claude-code-입문-치트시트)
+- [1. 초기 설정  CLAUDE.md](#1-초기-설정--claudemd)
+- [2. 키보드 단축키  네비게이션](#2-키보드-단축키--네비게이션)
+- [3. 필수 슬래시 명령어](#3-필수-슬래시-명령어)
+- [4. Quick Reference](#4-quick-reference)
+
+---
+
 ## Claude Code 입문 치트시트
 
 Claude Code를 처음 사용하는 분을 위한 핵심 가이드입니다. 초기 설정부터 자주 쓰는 단축키, 슬래시 명령어까지 한 페이지에 정리했습니다.

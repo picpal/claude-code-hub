@@ -5,6 +5,16 @@ description: Claude Code 생산성을 높이는 팁
 permalink: /pages/tips/productivity/
 ---
 
+## 목차
+- [1. Second Brain  memory 구축하기](#1-second-brain--memory-구축하기)
+- [2. Lazy Loading — CLAUDE.md 참조 구조](#2-lazy-loading--claudemd-참조-구조)
+- [3. 컨텍스트 윈도우 관리](#3-컨텍스트-윈도우-관리)
+- [4. MCP 토큰 모니터링](#4-mcp-토큰-모니터링)
+- [5. Mermaid 아키텍처 정리](#5-mermaid-아키텍처-정리)
+- [6. 무거운 작업은 스크립트로 오프로드](#6-무거운-작업은-스크립트로-오프로드)
+
+---
+
 ## 1. Second Brain & /memory 구축하기
 
 Claude Code는 대화가 끝나면 맥락을 잊지만, **로컬 마크다운에 학습 내용을 저장**하면 프로젝트의 기관 기억(Institutional Memory)으로 활용할 수 있습니다.

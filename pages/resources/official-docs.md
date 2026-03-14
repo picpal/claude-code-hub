@@ -5,6 +5,12 @@ description: Claude Code 공식 문서 및 관련 링크
 permalink: /pages/resources/official-docs/
 ---
 
+## 목차
+- [공식 문서](#공식-문서)
+- [관련 리소스](#관련-리소스)
+
+---
+
 ## 공식 문서
 
 | 리소스 | 링크 | 설명 |

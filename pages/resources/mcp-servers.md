@@ -5,6 +5,14 @@ description: Model Context Protocol 서버 설정 가이드
 permalink: /pages/resources/mcp-servers/
 ---
 
+## 목차
+- [MCP란?](#mcp란)
+- [설정 방법](#설정-방법)
+- [인기 MCP 서버](#인기-mcp-서버)
+- [프로젝트별 설정](#프로젝트별-설정)
+
+---
+
 ## MCP란?
 
 Model Context Protocol(MCP)은 Claude Code가 외부 도구 및 데이터 소스와 연결할 수 있게 해주는 프로토콜입니다.
