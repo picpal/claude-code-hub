@@ -3,7 +3,18 @@ set -euo pipefail
 
 REPO="anthropics/claude-code"
 PATCH_DIR="pages/patch-notes"
-DEEPL_URL="https://api-free.deepl.com/v2/translate"
+# DeepL API URL 자동 감지 (Free 키는 :fx로 끝남)
+if [[ "${DEEPL_API_KEY:-}" == *":fx" ]]; then
+  DEEPL_URL="https://api-free.deepl.com/v2/translate"
+else
+  DEEPL_URL="https://api.deepl.com/v2/translate"
+fi
+
+FORCE=false
+if [ "${1:-}" = "--force" ]; then
+  FORCE=true
+  echo "Force mode: will regenerate all files"
+fi
 
 mkdir -p "$PATCH_DIR"
 
@@ -21,7 +32,7 @@ echo "$RELEASES" | jq -c '.[]' | while read -r release; do
   FILENAME="${DATE}-${TAG}.md"
   FILEPATH="${PATCH_DIR}/${FILENAME}"
 
-  if [ -f "$FILEPATH" ]; then
+  if [ -f "$FILEPATH" ] && [ "$FORCE" = false ]; then
     echo "Skip: $FILENAME already exists"
     continue
   fi
@@ -35,11 +46,23 @@ echo "$RELEASES" | jq -c '.[]' | while read -r release; do
   # DeepL 번역 시도
   TRANSLATED_BODY=""
   if [ -n "${DEEPL_API_KEY:-}" ] && [ -n "$BODY" ]; then
-    TRANSLATED_BODY=$(curl -sf --connect-timeout 10 -m 30 \
+    echo "Translating: $FILENAME (${#BODY} chars) via $DEEPL_URL"
+    # 각 줄을 JSON 배열로 변환하여 개별 번역 (줄바꿈 보존)
+    TEXT_ARRAY=$(echo "$BODY" | jq -R -s 'split("\n") | map(select(length > 0))' )
+    DEEPL_RESPONSE=$(curl -s --connect-timeout 10 -m 120 \
       -X POST "$DEEPL_URL" \
-      -d "auth_key=${DEEPL_API_KEY}" \
-      --data-urlencode "text=${BODY}" \
-      -d "target_lang=KO" | jq -r '.translations[0].text // ""') || true
+      -H "Authorization: DeepL-Auth-Key ${DEEPL_API_KEY}" \
+      -H "Content-Type: application/json" \
+      -d "$(jq -n --argjson texts "$TEXT_ARRAY" --arg lang "KO" \
+        '{text: $texts, target_lang: $lang}')" \
+      2>&1) || true
+
+    if echo "$DEEPL_RESPONSE" | jq -e '.translations' > /dev/null 2>&1; then
+      TRANSLATED_BODY=$(echo "$DEEPL_RESPONSE" | jq -r '[.translations[].text] | join("\n")')
+      echo "  Translation OK (${#TRANSLATED_BODY} chars)"
+    else
+      echo "  Translation FAILED: $(echo "$DEEPL_RESPONSE" | head -c 200)"
+    fi
   fi
 
   if [ -n "$TRANSLATED_BODY" ]; then
