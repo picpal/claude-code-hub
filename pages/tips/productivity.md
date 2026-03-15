@@ -42,7 +42,7 @@ Claude Code는 대화가 끝나면 맥락을 잊지만, **로컬 마크다운에
 
 CLAUDE.md에 모든 정보를 넣으면 매 대화마다 불필요한 토큰을 소비합니다. **참조만 두고 상세 내용은 별도 파일로 분리**하는 것이 핵심입니다.
 
-<details markdown="1">
+<details>
 <summary>나쁜 예: 모든 API 스펙을 CLAUDE.md에 직접 작성</summary>
 
 ```markdown
@@ -59,7 +59,7 @@ CLAUDE.md에 모든 정보를 넣으면 매 대화마다 불필요한 토큰을 
 매 대화마다 이 모든 내용이 로드되어 토큰을 낭비합니다.
 </details>
 
-<details markdown="1">
+<details>
 <summary>좋은 예: 참조만 두고 상세는 별도 파일로</summary>
 
 ```markdown

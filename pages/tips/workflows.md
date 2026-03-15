@@ -75,7 +75,7 @@ Claude의 작업 결과를 다른 AI에게 검증받는 전략입니다.
 잘못된 접근이 있으면 지적해줘
 ```
 
-<details markdown="1">
+<details>
 <summary>Custom Skill로 자동화하기</summary>
 
 `/review-with-gpt` 같은 Custom Skill을 만들면 원커맨드로 자동화할 수 있습니다. 대화 내보내기부터 다른 AI에게 분석 요청까지 하나의 명령으로 처리됩니다.
@@ -121,7 +121,7 @@ Claude Code 활용의 핵심 프레임워크입니다.
 | **A**gents | Self-healing + Sub-agent 활용 | 병렬 처리로 속도 향상 |
 | **T**ools | 작고 원자적인 도구들 조합 | 큰 스크립트보다 작은 스크립트 여러 개 |
 
-<details markdown="1">
+<details>
 <summary>종합 예시: "블로그에 댓글 기능 추가하기"를 WAT로 풀기</summary>
 
 **Workflows** - 작업 흐름을 plain English로 정의:

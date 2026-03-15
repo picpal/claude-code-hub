@@ -56,7 +56,7 @@ CLAUDE.md는 두 가지 레벨로 관리됩니다.
 
 > CLAUDE.md는 **300줄 이하**로 유지하세요. 너무 길면 토큰을 낭비하고 오히려 핵심이 희석됩니다.
 
-<details markdown="1">
+<details>
 <summary>CLAUDE.md 작성 꿀팁</summary>
 
 - **규칙 우선순위**: 파일 위쪽에 적은 규칙일수록 우선순위가 높습니다. 중요한 규칙을 먼저 적으세요.
