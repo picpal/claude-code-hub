@@ -34,6 +34,7 @@
 
   .overlay.active {
     display: block;
+    touch-action: none;
   }
 
   .content {
