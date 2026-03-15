@@ -26,6 +26,12 @@ echo "$RELEASES" | jq -c '.[]' | while read -r release; do
     continue
   fi
 
+  # 빈 body 스킵
+  if [ -z "$BODY" ] || [ "$BODY" = "null" ]; then
+    echo "Skip: $FILENAME (empty body)"
+    continue
+  fi
+
   # DeepL 번역 시도
   TRANSLATED_BODY=""
   if [ -n "${DEEPL_API_KEY:-}" ] && [ -n "$BODY" ]; then
@@ -44,12 +50,15 @@ echo "$RELEASES" | jq -c '.[]' | while read -r release; do
 
   # 섹션 헤더 한국어 변환
   FINAL_BODY=$(echo "$FINAL_BODY" | sed \
-    -e 's/^## Added/## 추가/' \
-    -e 's/^## Fixed/## 수정/' \
-    -e 's/^## Changed/## 변경/' \
-    -e 's/^## Removed/## 제거/' \
-    -e 's/^## Deprecated/## 폐기/' \
-    -e "s/^## What's Changed/## 변경사항/")
+    -e 's/^## [Aa]dded/## 추가/' \
+    -e 's/^## [Ff]ixed/## 수정/' \
+    -e 's/^## [Cc]hanged/## 변경/' \
+    -e 's/^## [Rr]emoved/## 제거/' \
+    -e 's/^## [Dd]eprecated/## 폐기/' \
+    -e "s/^## [Ww]hat's [Cc]hanged/## 변경사항/" \
+    -e 's/^## [Nn]ew [Ff]eatures/## 새 기능/' \
+    -e 's/^## [Bb]ug [Ff]ixes/## 버그 수정/' \
+    -e 's/^## [Bb]reaking [Cc]hanges/## 주요 변경/')
 
   cat > "$FILEPATH" <<EOF
 ---
