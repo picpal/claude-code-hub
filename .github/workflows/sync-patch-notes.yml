@@ -70,3 +70,34 @@ jobs:
             git commit -m "chore: sync patch notes from Claude Code releases"
             git push
           fi
+
+  notify:
+    if: always()
+    needs: [check, sync]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack
+        if: env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ "${{ needs.sync.result }}" = "success" ]; then
+            EMOJI="✅"
+            STATUS="성공"
+          elif [ "${{ needs.sync.result }}" = "skipped" ]; then
+            EMOJI="⏭️"
+            STATUS="스킵 (새 릴리즈 없음)"
+          else
+            EMOJI="❌"
+            STATUS="실패"
+          fi
+
+          curl -sf -X POST "$SLACK_WEBHOOK_URL" \
+            -H 'Content-type: application/json' \
+            -d "$(jq -n \
+              --arg emoji "$EMOJI" \
+              --arg status "$STATUS" \
+              --arg workflow "Sync Patch Notes" \
+              --arg trigger "${{ github.event_name }}" \
+              --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n로그: \($url)"}')" || echo "Slack notification failed"
