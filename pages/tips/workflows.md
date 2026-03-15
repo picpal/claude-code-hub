@@ -78,7 +78,7 @@ Claude의 작업 결과를 다른 AI에게 검증받는 전략입니다.
 <details>
 <summary>Custom Skill로 자동화하기</summary>
 
-`/review-with-gpt` 같은 Custom Skill을 만들면 원커맨드로 자동화할 수 있습니다. 대화 내보내기부터 다른 AI에게 분석 요청까지 하나의 명령으로 처리됩니다.
+<p><code>/review-with-gpt</code> 같은 Custom Skill을 만들면 원커맨드로 자동화할 수 있습니다. 대화 내보내기부터 다른 AI에게 분석 요청까지 하나의 명령으로 처리됩니다.</p>
 
 </details>
 
@@ -124,26 +124,29 @@ Claude Code 활용의 핵심 프레임워크입니다.
 <details>
 <summary>종합 예시: "블로그에 댓글 기능 추가하기"를 WAT로 풀기</summary>
 
-**Workflows** - 작업 흐름을 plain English로 정의:
+<p><strong>Workflows</strong> - 작업 흐름을 plain English로 정의:</p>
 
-```
-1. 댓글 데이터 모델 설계
+<pre><code>1. 댓글 데이터 모델 설계
 2. API 엔드포인트 구현
 3. 프론트엔드 컴포넌트 개발
 4. 통합 테스트 작성
-```
+</code></pre>
 
-**Agents** - 병렬 처리 설계:
+<p><strong>Agents</strong> - 병렬 처리 설계:</p>
 
-- Agent 1: 백엔드 API + 데이터 모델
-- Agent 2: 프론트엔드 댓글 컴포넌트
-- Agent 3: 테스트 코드 작성
+<ul>
+<li>Agent 1: 백엔드 API + 데이터 모델</li>
+<li>Agent 2: 프론트엔드 댓글 컴포넌트</li>
+<li>Agent 3: 테스트 코드 작성</li>
+</ul>
 
-**Tools** - 작은 단위로 분리:
+<p><strong>Tools</strong> - 작은 단위로 분리:</p>
 
-- DB 마이그레이션 스크립트
-- API 라우트 핸들러
-- 컴포넌트 단위 테스트
-- E2E 테스트 스크립트
+<ul>
+<li>DB 마이그레이션 스크립트</li>
+<li>API 라우트 핸들러</li>
+<li>컴포넌트 단위 테스트</li>
+<li>E2E 테스트 스크립트</li>
+</ul>
 
 </details>

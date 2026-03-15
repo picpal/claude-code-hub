@@ -45,8 +45,7 @@ CLAUDE.md에 모든 정보를 넣으면 매 대화마다 불필요한 토큰을 
 <details>
 <summary>나쁜 예: 모든 API 스펙을 CLAUDE.md에 직접 작성</summary>
 
-```markdown
-# CLAUDE.md
+<pre><code class="language-markdown"># CLAUDE.md
 ## API 스펙
 ### POST /users
 - Request Body: { name: string, email: string, ... }
@@ -54,21 +53,20 @@ CLAUDE.md에 모든 정보를 넣으면 매 대화마다 불필요한 토큰을 
 ### GET /users/:id
 ...
 (수백 줄의 API 스펙이 계속됨)
-```
+</code></pre>
 
-매 대화마다 이 모든 내용이 로드되어 토큰을 낭비합니다.
+<p>매 대화마다 이 모든 내용이 로드되어 토큰을 낭비합니다.</p>
 </details>
 
 <details>
 <summary>좋은 예: 참조만 두고 상세는 별도 파일로</summary>
 
-```markdown
-# CLAUDE.md
+<pre><code class="language-markdown"># CLAUDE.md
 ## API 스펙
 자세한 내용은 @docs/api-spec.md 참조
-```
+</code></pre>
 
-필요할 때만 해당 파일을 읽으므로 토큰을 절약합니다.
+<p>필요할 때만 해당 파일을 읽으므로 토큰을 절약합니다.</p>
 </details>
 
 ### 폴더별 CLAUDE.md
