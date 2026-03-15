@@ -147,6 +147,30 @@ body {
       font-weight: 600;
     }
   }
+
+  details {
+    margin-bottom: $spacing-md;
+    border: 1px solid $border;
+    border-radius: 8px;
+    padding: $spacing-md;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: $spacing-sm 0;
+    color: $text-primary;
+
+    &:hover {
+      color: $accent;
+    }
+  }
+
+  details[open] summary {
+    margin-bottom: $spacing-sm;
+    border-bottom: 1px solid $border;
+    padding-bottom: $spacing-sm;
+  }
 }
 
 // List page

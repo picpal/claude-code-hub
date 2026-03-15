@@ -8,6 +8,7 @@ highlighter: rouge
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  parse_block_html: true  # <details>, <summary> 등 블록 HTML 내부의 마크다운 파싱 활성화
 
 defaults:
   - scope:
