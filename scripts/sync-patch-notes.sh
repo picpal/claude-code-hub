@@ -29,6 +29,7 @@ echo "$RELEASES" | jq -c '.[]' | while read -r release; do
   DATE=$(echo "$release" | jq -r '.published_at' | cut -dT -f1)
   VERSION=${TAG#v}
   BODY=$(echo "$release" | jq -r '.body // ""')
+  HTML_URL=$(echo "$release" | jq -r '.html_url // ""')
   FILENAME="${DATE}-${TAG}.md"
   FILEPATH="${PATCH_DIR}/${FILENAME}"
 
@@ -91,6 +92,8 @@ date: ${DATE}
 version: "${VERSION}"
 permalink: /pages/patch-notes/${DATE}-${TAG}/
 ---
+
+> 원문: [Claude Code ${TAG} Release Notes](${HTML_URL})
 
 ${FINAL_BODY}
 EOF
