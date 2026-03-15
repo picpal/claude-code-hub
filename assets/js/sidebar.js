@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
       menuToggle.classList.toggle('active');
       sidebar.classList.toggle('open');
       overlay.classList.toggle('active');
+      document.body.classList.toggle('menu-open');
     });
   }
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       menuToggle.classList.remove('active');
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
+      document.body.classList.remove('menu-open');
     });
   }
 });

@@ -14,6 +14,10 @@ body {
   color: $text-primary;
   background-color: $bg-primary;
   line-height: 1.6;
+
+  &.menu-open {
+    overflow: hidden;
+  }
 }
 
 .site-wrapper {
