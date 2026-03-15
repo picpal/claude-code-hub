@@ -47,6 +47,8 @@ jobs:
     needs: check
     if: needs.check.outputs.has_new == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    outputs:
+      sync_log: ${{ steps.sync_log.outputs.log }}
     steps:
       - uses: actions/checkout@v4
 
@@ -54,7 +56,13 @@ jobs:
         run: sudo apt-get install -y jq
 
       - name: Sync patch notes
-        run: bash scripts/sync-patch-notes.sh
+        id: sync_log
+        run: |
+          OUTPUT=$(bash scripts/sync-patch-notes.sh 2>&1)
+          echo "$OUTPUT"
+          echo "log<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$OUTPUT" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
         env:
           DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -80,6 +88,7 @@ jobs:
         if: env.SLACK_WEBHOOK_URL != ''
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SYNC_LOG: ${{ needs.sync.outputs.sync_log }}
         run: |
           if [ "${{ needs.sync.result }}" = "success" ]; then
             EMOJI="✅"
@@ -92,6 +101,10 @@ jobs:
             STATUS="실패"
           fi
 
+          # 로그 텍스트 (최대 500자로 제한)
+          LOG_TEXT="${SYNC_LOG:0:500}"
+          [ ${#SYNC_LOG} -gt 500 ] && LOG_TEXT="${LOG_TEXT}..."
+
           curl -sf -X POST "$SLACK_WEBHOOK_URL" \
             -H 'Content-type: application/json' \
             -d "$(jq -n \
@@ -100,4 +113,5 @@ jobs:
               --arg workflow "Sync Patch Notes" \
               --arg trigger "${{ github.event_name }}" \
               --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n로그: \($url)"}')" || echo "Slack notification failed"
+              --arg log "$LOG_TEXT" \
+              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n로그: \($url)\n```\n\($log)\n```"}')" || echo "Slack notification failed"
