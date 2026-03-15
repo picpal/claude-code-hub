@@ -34,6 +34,7 @@
   .content {
     padding: $spacing-xl $spacing-md;
     padding-top: 72px;
+    overflow-x: hidden;
   }
 
   .home-hero h1 {
@@ -42,5 +43,13 @@
 
   .quick-links {
     grid-template-columns: 1fr;
+  }
+
+  .post-content table {
+    font-size: 0.8rem;
+  }
+
+  .post-content pre code {
+    font-size: 0.78rem;
   }
 }
