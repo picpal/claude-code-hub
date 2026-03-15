@@ -18,17 +18,15 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    touch-action: pan-y;
     transition: left 0.3s ease;
     box-shadow: none;
+    padding-top: 56px;
+    padding-bottom: 40px;
 
     &.open {
       left: 0;
       box-shadow: 4px 0 24px rgba(0,0,0,0.1);
-    }
-
-    // Fix: 모바일에서 메뉴 토글 버튼과 사이드바 헤더 겹침 방지
-    .sidebar-header {
-      padding-top: 40px;
     }
   }
 
