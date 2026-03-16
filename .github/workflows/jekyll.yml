@@ -1,12 +1,12 @@
 name: Deploy Jekyll site to Pages
 
+# 배포 트리거:
+# - push to main: 직접 코드 변경 시 배포
+# - workflow_dispatch: 수동 배포 또는 Sync Patch Notes에서 명시적 호출
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Sync Patch Notes"]
-    types: [completed]
 
 permissions:
   contents: read
