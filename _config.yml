@@ -33,3 +33,9 @@ defaults:
 
 plugins:
   - jekyll-seo-tag
+
+exclude:
+  - scripts/
+  - .claude/
+  - .orchestra/
+  - .github/

@@ -80,7 +80,7 @@ jobs:
           fi
 
   notify:
-    if: always()
+    if: always() && (needs.check.outputs.has_new == 'true' || github.event_name == 'workflow_dispatch')
     needs: [check, sync]
     runs-on: ubuntu-latest
     steps:
@@ -93,9 +93,6 @@ jobs:
           if [ "${{ needs.sync.result }}" = "success" ]; then
             EMOJI="✅"
             STATUS="성공"
-          elif [ "${{ needs.sync.result }}" = "skipped" ]; then
-            EMOJI="⏭️"
-            STATUS="스킵 (새 릴리즈 없음)"
           else
             EMOJI="❌"
             STATUS="실패"

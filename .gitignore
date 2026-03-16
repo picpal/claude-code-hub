@@ -1,0 +1,24 @@
+# Jekyll build output
+_site/
+.jekyll-cache/
+.sass-cache/
+
+# Environment & secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Tool configurations
+.claude/
+.orchestra/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
