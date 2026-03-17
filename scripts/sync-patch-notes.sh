@@ -24,7 +24,7 @@ RELEASES=$(curl -sf --connect-timeout 10 -m 30 \
   ${GITHUB_TOKEN:+-H "Authorization: Bearer $GITHUB_TOKEN"} \
   "https://api.github.com/repos/${REPO}/releases?per_page=10") || { echo "GitHub API failed"; exit 0; }
 
-echo "$RELEASES" | jq -c '.[]' | while read -r release; do
+while read -r release; do
   TAG=$(echo "$release" | jq -r '.tag_name')
   DATE=$(echo "$release" | jq -r '.published_at' | cut -dT -f1)
   VERSION=${TAG#v}
@@ -99,4 +99,4 @@ ${FINAL_BODY}
 EOF
 
   echo "Created: $FILENAME"
-done
+done < <(echo "$RELEASES" | jq -c '.[]')
