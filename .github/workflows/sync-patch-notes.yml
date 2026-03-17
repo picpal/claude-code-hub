@@ -42,7 +42,7 @@ jobs:
           done < <(echo "$RELEASES" | jq -c '.[]')
 
           echo "has_new=$HAS_NEW" >> "$GITHUB_OUTPUT"
-          [ "$HAS_NEW" = "false" ] && echo "No new releases"
+          if [ "$HAS_NEW" = "false" ]; then echo "No new releases"; fi
 
   sync:
     needs: check
