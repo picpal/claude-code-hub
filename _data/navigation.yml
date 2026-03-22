@@ -11,6 +11,8 @@
       url: /pages/resources/getting-started/
     - title: MCP Servers
       url: /pages/resources/mcp-servers/
+    - title: Discord Integration
+      url: /pages/resources/discord-integration/
 
 - title: Tips & Tricks
   url: /pages/tips/
