@@ -26,4 +26,9 @@ permalink: /pages/resources/
     <span class="card-title">Discord Integration</span>
     <span class="card-desc">Discord 채널 연동 가이드</span>
   </a>
+  <a href="{{ '/pages/resources/custom-channels/' | relative_url }}" class="quick-link-card">
+    <span class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8z"/></svg></span>
+    <span class="card-title">Custom Channels</span>
+    <span class="card-desc">커스텀 채널 개발 가이드</span>
+  </a>
 </div>
