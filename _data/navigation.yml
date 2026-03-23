@@ -13,6 +13,8 @@
       url: /pages/resources/mcp-servers/
     - title: Discord Integration
       url: /pages/resources/discord-integration/
+    - title: Custom Channels
+      url: /pages/resources/custom-channels/
 
 - title: Tips & Tricks
   url: /pages/tips/
