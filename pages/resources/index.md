@@ -31,4 +31,9 @@ permalink: /pages/resources/
     <span class="card-title">Custom Channels</span>
     <span class="card-desc">커스텀 채널 개발 가이드</span>
   </a>
+  <a href="{{ '/pages/resources/computer-use/' | relative_url }}" class="quick-link-card">
+    <span class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+    <span class="card-title">Computer Use</span>
+    <span class="card-desc">컴퓨터 사용 기능 가이드</span>
+  </a>
 </div>
