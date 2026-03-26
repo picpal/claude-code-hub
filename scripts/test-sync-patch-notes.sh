@@ -24,54 +24,10 @@ else
   fail "빈 body를 감지하지 못함"
 fi
 
-# TC2: sed 헤더 변환 — 다양한 대소문자
+# TC2: 이미 존재하는 파일 스킵
 echo ""
-echo "TC2: sed 헤더 변환 (대소문자)"
-TEST_INPUT="## Added
-## added
-## Fixed
-## fixed
-## Changed
-## What's Changed
-## What's changed
-## New Features
-## Bug Fixes
-## Breaking Changes"
-
-EXPECTED="## 추가
-## 추가
-## 수정
-## 수정
-## 변경
-## 변경사항
-## 변경사항
-## 새 기능
-## 버그 수정
-## 주요 변경"
-
-RESULT=$(echo "$TEST_INPUT" | sed \
-  -e 's/^## [Aa]dded/## 추가/' \
-  -e 's/^## [Ff]ixed/## 수정/' \
-  -e 's/^## [Cc]hanged/## 변경/' \
-  -e 's/^## [Rr]emoved/## 제거/' \
-  -e 's/^## [Dd]eprecated/## 폐기/' \
-  -e "s/^## [Ww]hat's [Cc]hanged/## 변경사항/" \
-  -e 's/^## [Nn]ew [Ff]eatures/## 새 기능/' \
-  -e 's/^## [Bb]ug [Ff]ixes/## 버그 수정/' \
-  -e 's/^## [Bb]reaking [Cc]hanges/## 주요 변경/')
-
-if [ "$RESULT" = "$EXPECTED" ]; then
-  pass "모든 헤더 변환 정상"
-else
-  fail "헤더 변환 불일치"
-  echo "    Expected: $(echo "$EXPECTED" | head -3)..."
-  echo "    Got:      $(echo "$RESULT" | head -3)..."
-fi
-
-# TC3: 이미 존재하는 파일 스킵
-echo ""
-echo "TC3: 기존 파일 스킵"
-PATCH_DIR="$TMPDIR/tc3/pages/patch-notes"
+echo "TC2: 기존 파일 스킵"
+PATCH_DIR="$TMPDIR/tc2/pages/patch-notes"
 mkdir -p "$PATCH_DIR"
 touch "$PATCH_DIR/2026-03-14-v2.1.76.md"
 FILEPATH="$PATCH_DIR/2026-03-14-v2.1.76.md"
@@ -81,10 +37,10 @@ else
   fail "기존 파일 감지 실패"
 fi
 
-# TC4: Jekyll front matter 형식 검증
+# TC3: Jekyll front matter 형식 검증
 echo ""
-echo "TC4: Front matter 형식"
-PATCH_DIR="$TMPDIR/tc4/pages/patch-notes"
+echo "TC3: Front matter 형식"
+PATCH_DIR="$TMPDIR/tc3/pages/patch-notes"
 mkdir -p "$PATCH_DIR"
 TAG="v2.1.76"
 DATE="2026-03-14"
@@ -122,9 +78,9 @@ else
   fail "permalink 누락"
 fi
 
-# TC5: 버전 추출 (v 접두사 제거)
+# TC4: 버전 추출 (v 접두사 제거)
 echo ""
-echo "TC5: 버전 추출"
+echo "TC4: 버전 추출"
 TAG="v2.1.76"
 VERSION=${TAG#v}
 if [ "$VERSION" = "2.1.76" ]; then
@@ -133,16 +89,16 @@ else
   fail "v 접두사 제거 실패: $VERSION"
 fi
 
-# TC6: DeepL 미설정 시 원문 유지
+# TC5: ANTHROPIC_API_KEY 미설정 시 원문 유지
 echo ""
-echo "TC6: DeepL 미설정 시 fallback"
-unset DEEPL_API_KEY 2>/dev/null || true
+echo "TC5: ANTHROPIC_API_KEY 미설정 시 fallback"
+unset ANTHROPIC_API_KEY 2>/dev/null || true
 BODY="## Added\n- New feature"
 TRANSLATED_BODY=""
-if [ -n "${DEEPL_API_KEY:-}" ]; then
-  fail "DEEPL_API_KEY가 설정되어 있음"
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then
+  fail "ANTHROPIC_API_KEY가 설정되어 있음"
 else
-  pass "DEEPL_API_KEY 미설정 감지"
+  pass "ANTHROPIC_API_KEY 미설정 감지"
 fi
 if [ -z "$TRANSLATED_BODY" ]; then
   FINAL_BODY="$BODY"
