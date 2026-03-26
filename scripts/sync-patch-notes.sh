@@ -3,12 +3,6 @@ set -euo pipefail
 
 REPO="anthropics/claude-code"
 PATCH_DIR="pages/patch-notes"
-# DeepL API URL 자동 감지 (Free 키는 :fx로 끝남)
-if [[ "${DEEPL_API_KEY:-}" == *":fx" ]]; then
-  DEEPL_URL="https://api-free.deepl.com/v2/translate"
-else
-  DEEPL_URL="https://api.deepl.com/v2/translate"
-fi
 
 FORCE=false
 if [ "${1:-}" = "--force" ]; then
@@ -44,25 +38,40 @@ while read -r release; do
     continue
   fi
 
-  # DeepL 번역 시도
+  # Claude Haiku 번역 시도
   TRANSLATED_BODY=""
-  if [ -n "${DEEPL_API_KEY:-}" ] && [ -n "$BODY" ]; then
-    echo "Translating: $FILENAME (${#BODY} chars) via $DEEPL_URL"
-    # 각 줄을 JSON 배열로 변환하여 개별 번역 (줄바꿈 보존)
-    TEXT_ARRAY=$(echo "$BODY" | jq -R -s 'split("\n") | map(select(length > 0))' )
-    DEEPL_RESPONSE=$(curl -s --connect-timeout 10 -m 120 \
-      -X POST "$DEEPL_URL" \
-      -H "Authorization: DeepL-Auth-Key ${DEEPL_API_KEY}" \
-      -H "Content-Type: application/json" \
-      -d "$(jq -n --argjson texts "$TEXT_ARRAY" --arg lang "KO" \
-        '{text: $texts, target_lang: $lang}')" \
+  if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ -n "$BODY" ]; then
+    echo "Translating: $FILENAME (${#BODY} chars) via Claude Haiku"
+    SYSTEM_PROMPT='You are a professional translator. Translate the following GitHub release notes from English to Korean (한국어).
+
+Rules:
+- Use formal/official tone (공식적인 어조)
+- Translate section headers naturally (e.g., "## Added" → "## 추가", "## Fixed" → "## 수정", "## Changed" → "## 변경", "## Removed" → "## 제거", "## Deprecated" → "## 폐기", "## What'\''s Changed" → "## 변경사항", "## New Features" → "## 새 기능", "## Bug Fixes" → "## 버그 수정", "## Breaking Changes" → "## 주요 변경")
+- Keep all development/technical terms in English as-is (e.g., API, webhook, endpoint, CLI, SDK, token, prompt, model, MCP, LSP, IDE, Git, SSH, JSON, YAML, Markdown, etc.)
+- Preserve all Markdown formatting exactly (headers, lists, code blocks, links, bold, italic)
+- Preserve all URLs, code snippets, and file paths exactly as-is
+- Do not add any commentary or explanation — output ONLY the translated text'
+    CLAUDE_RESPONSE=$(curl -s --connect-timeout 10 -m 120 \
+      -X POST "https://api.anthropic.com/v1/messages" \
+      -H "x-api-key: ${ANTHROPIC_API_KEY}" \
+      -H "anthropic-version: 2023-06-01" \
+      -H "content-type: application/json" \
+      -d "$(jq -n \
+        --arg system "$SYSTEM_PROMPT" \
+        --arg body "$BODY" \
+        '{
+          model: "claude-haiku-4-5-20251001",
+          max_tokens: 4096,
+          system: $system,
+          messages: [{role: "user", content: $body}]
+        }')" \
       2>&1) || true
 
-    if echo "$DEEPL_RESPONSE" | jq -e '.translations' > /dev/null 2>&1; then
-      TRANSLATED_BODY=$(echo "$DEEPL_RESPONSE" | jq -r '[.translations[].text] | join("\n")')
+    if echo "$CLAUDE_RESPONSE" | jq -e '.content[0].text' > /dev/null 2>&1; then
+      TRANSLATED_BODY=$(echo "$CLAUDE_RESPONSE" | jq -r '.content[0].text')
       echo "  Translation OK (${#TRANSLATED_BODY} chars)"
     else
-      echo "  Translation FAILED: $(echo "$DEEPL_RESPONSE" | head -c 200)"
+      echo "  Translation FAILED: $(echo "$CLAUDE_RESPONSE" | head -c 200)"
     fi
   fi
 
@@ -71,18 +80,6 @@ while read -r release; do
   else
     FINAL_BODY="$BODY"
   fi
-
-  # 섹션 헤더 한국어 변환
-  FINAL_BODY=$(echo "$FINAL_BODY" | sed \
-    -e 's/^## [Aa]dded/## 추가/' \
-    -e 's/^## [Ff]ixed/## 수정/' \
-    -e 's/^## [Cc]hanged/## 변경/' \
-    -e 's/^## [Rr]emoved/## 제거/' \
-    -e 's/^## [Dd]eprecated/## 폐기/' \
-    -e "s/^## [Ww]hat's [Cc]hanged/## 변경사항/" \
-    -e 's/^## [Nn]ew [Ff]eatures/## 새 기능/' \
-    -e 's/^## [Bb]ug [Ff]ixes/## 버그 수정/' \
-    -e 's/^## [Bb]reaking [Cc]hanges/## 주요 변경/')
 
   cat > "$FILEPATH" <<EOF
 ---
