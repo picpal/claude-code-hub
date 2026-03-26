@@ -11,7 +11,12 @@ _site/
 
 # Tool configurations
 .claude/
+!.claude/settings.json
 .orchestra/
+
+# Baton pipeline
+.baton/logs/
+.baton/reports/
 
 # OS generated
 .DS_Store
