@@ -2,6 +2,7 @@
 _site/
 .jekyll-cache/
 .sass-cache/
+.discord-token
 
 # Environment & secrets
 .env
