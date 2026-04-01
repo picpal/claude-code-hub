@@ -71,4 +71,4 @@ jobs:
               --arg trigger "${{ github.event_name }}" \
               --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
               --arg page "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" \
-              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n사이트: \($page)\n로그: \($url)"}')" || echo "Slack notification failed"
+              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n로그: \($url)\n\n🔗 사이트: \($page)"}')" || echo "Slack notification failed"
