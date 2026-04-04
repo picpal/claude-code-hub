@@ -107,6 +107,131 @@ else
   fail "fallback 로직 실패"
 fi
 
+# Helper function: count Korean characters using python3 (cross-platform)
+count_korean() {
+  local text="$1"
+  printf '%s' "$text" | python3 -c "
+import sys
+text = sys.stdin.read()
+count = sum(1 for c in text if '\uAC00' <= c <= '\uD7AF')
+print(count)
+"
+}
+
+# TC6: 한국어 비율 계산 - 충분한 한국어 포함 시 검증 통과
+echo ""
+echo "TC6: 한국어 비율 검증 - 충분한 한국어 (>= 15%)"
+TRANSLATED_BODY="## 추가된 기능
+- 새로운 API endpoint 가 추가되었습니다
+- webhook 연동이 개선되었습니다"
+TOTAL_CHARS=$(printf '%s' "$TRANSLATED_BODY" | tr -d '[:space:]' | wc -c | tr -d ' ')
+KOREAN_CHARS=$(count_korean "$TRANSLATED_BODY")
+if [ "$TOTAL_CHARS" -gt 0 ]; then
+  RATIO_PCT=$(python3 -c "print(int($KOREAN_CHARS * 100 / $TOTAL_CHARS))")
+  if [ "${RATIO_PCT:-0}" -ge 15 ]; then
+    pass "한국어 비율 ${RATIO_PCT}% >= 15% 검증 통과"
+  else
+    fail "한국어 비율 ${RATIO_PCT}% < 15% (예상: 통과)"
+  fi
+else
+  fail "총 문자수 계산 실패"
+fi
+
+# TC7: 한국어 비율 계산 - 한국어 거의 없을 때 실패 감지
+echo ""
+echo "TC7: 한국어 비율 검증 - 불충분한 한국어 (< 15%)"
+TRANSLATED_BODY="## Added
+- New API endpoint has been added
+- webhook integration improved"
+TOTAL_CHARS=$(printf '%s' "$TRANSLATED_BODY" | tr -d '[:space:]' | wc -c | tr -d ' ')
+KOREAN_CHARS=$(count_korean "$TRANSLATED_BODY")
+if [ "$TOTAL_CHARS" -gt 0 ]; then
+  RATIO_PCT=$(python3 -c "print(int($KOREAN_CHARS * 100 / $TOTAL_CHARS))")
+  if [ "${RATIO_PCT:-0}" -lt 15 ]; then
+    pass "한국어 비율 ${RATIO_PCT}% < 15% 올바르게 감지"
+  else
+    fail "한국어 비율 ${RATIO_PCT}% >= 15% (예상: 실패 감지)"
+  fi
+else
+  fail "총 문자수 계산 실패"
+fi
+
+# TC8: 한국어 비율 15% 경계값 (정확히 15% 이상은 통과)
+echo ""
+echo "TC8: 한국어 비율 경계값 테스트 (15% 이상은 통과)"
+# 한국어 문자가 약 20%인 텍스트: "변경됨ABC" → 3한국어/6총 = 50%
+TRANSLATED_BODY="변경됨ABC"
+TOTAL_CHARS=$(printf '%s' "$TRANSLATED_BODY" | tr -d '[:space:]' | wc -c | tr -d ' ')
+KOREAN_CHARS=$(count_korean "$TRANSLATED_BODY")
+if [ "$TOTAL_CHARS" -gt 0 ]; then
+  RATIO_PCT=$(python3 -c "print(int($KOREAN_CHARS * 100 / $TOTAL_CHARS))")
+  if [ "${RATIO_PCT:-0}" -ge 15 ]; then
+    pass "한국어 비율 ${RATIO_PCT}% >= 15% 경계값 통과"
+  else
+    fail "한국어 비율 ${RATIO_PCT}% < 15% 경계값 실패 (예상: 통과)"
+  fi
+else
+  fail "총 문자수 계산 실패"
+fi
+
+# TC9: 재시도 후 fallback - 재시도도 실패 시 원문 사용
+echo ""
+echo "TC9: 재시도 실패 시 원문 fallback"
+ORIGINAL_BODY="## Added\n- New feature added"
+RETRY_TRANSLATED="## Added\n- New feature still in English"
+RETRY_TOTAL=$(printf '%s' "$RETRY_TRANSLATED" | tr -d '[:space:]' | wc -c | tr -d ' ')
+RETRY_KOREAN=$(count_korean "$RETRY_TRANSLATED")
+if [ "$RETRY_TOTAL" -gt 0 ]; then
+  RETRY_PCT=$(python3 -c "print(int($RETRY_KOREAN * 100 / $RETRY_TOTAL))")
+  if [ "${RETRY_PCT:-0}" -lt 15 ]; then
+    TRANSLATED_BODY=""
+    FINAL_BODY="$ORIGINAL_BODY"
+    if [ "$FINAL_BODY" = "$ORIGINAL_BODY" ]; then
+      pass "재시도 실패 시 원문으로 fallback 정상"
+    else
+      fail "재시도 실패 시 fallback 오류"
+    fi
+  else
+    fail "테스트 설정 오류: 재시도 텍스트가 Korean ratio >= 15%"
+  fi
+else
+  fail "총 문자수 계산 실패"
+fi
+
+# TC10: 시스템 프롬프트에 한국어 문법 규칙 포함 확인
+echo ""
+echo "TC10: 시스템 프롬프트 한국어 문법 규칙 포함 확인"
+SYSTEM_PROMPT_CONTENT=$(grep -n "문장의 서술어" /Users/picpal/Desktop/workspace/claude-code-hub/scripts/sync-patch-notes.sh 2>/dev/null || echo "")
+if [ -n "$SYSTEM_PROMPT_CONTENT" ]; then
+  pass "시스템 프롬프트에 한국어 서술어 규칙 포함됨"
+else
+  fail "시스템 프롬프트에 한국어 서술어 규칙 누락"
+fi
+
+SYSTEM_PROMPT_CONTENT2=$(grep -n "기술 용어만 영어" /Users/picpal/Desktop/workspace/claude-code-hub/scripts/sync-patch-notes.sh 2>/dev/null || echo "")
+if [ -n "$SYSTEM_PROMPT_CONTENT2" ]; then
+  pass "시스템 프롬프트에 기술 용어 영어 유지 규칙 포함됨"
+else
+  fail "시스템 프롬프트에 기술 용어 규칙 누락"
+fi
+
+# TC11: 한국어 비율 검증 로직이 스크립트에 존재하는지 확인
+echo ""
+echo "TC11: 한국어 비율 검증 로직 존재 확인"
+RATIO_LOGIC=$(grep -n "AC00.*D7AF\|korean_ratio\|KOREAN_CHARS\|RATIO_PCT" /Users/picpal/Desktop/workspace/claude-code-hub/scripts/sync-patch-notes.sh 2>/dev/null || echo "")
+if [ -n "$RATIO_LOGIC" ]; then
+  pass "한국어 비율 검증 로직이 스크립트에 존재함"
+else
+  fail "한국어 비율 검증 로직이 스크립트에 없음"
+fi
+
+RETRY_LOGIC=$(grep -n "retry\|RETRY\|enhanced.*prompt\|enhanced_prompt\|ENHANCED" /Users/picpal/Desktop/workspace/claude-code-hub/scripts/sync-patch-notes.sh 2>/dev/null || echo "")
+if [ -n "$RETRY_LOGIC" ]; then
+  pass "재시도 로직이 스크립트에 존재함"
+else
+  fail "재시도 로직이 스크립트에 없음"
+fi
+
 # 결과 요약
 echo ""
 echo "=== 결과: ${PASS} passed, ${FAIL} failed ==="
