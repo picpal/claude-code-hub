@@ -89,37 +89,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  notify:
-    if: always() && (needs.check.outputs.has_new == 'true' || github.event_name == 'workflow_dispatch')
-    needs: [check, sync]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify Slack
-        if: env.SLACK_WEBHOOK_URL != ''
+      - name: Trigger briefing
+        if: steps.push_check.outputs.pushed == 'true'
+        run: gh workflow run claude-briefing.yml
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SYNC_LOG: ${{ needs.sync.outputs.sync_log }}
-        run: |
-          if [ "${{ needs.sync.result }}" = "success" ]; then
-            EMOJI="✅"
-            STATUS="성공"
-          else
-            EMOJI="❌"
-            STATUS="실패"
-          fi
-
-          # 로그 텍스트 (최대 500자로 제한)
-          LOG_TEXT="${SYNC_LOG:0:500}"
-          [ ${#SYNC_LOG} -gt 500 ] && LOG_TEXT="${LOG_TEXT}..."
-
-          curl -sf -X POST "$SLACK_WEBHOOK_URL" \
-            -H 'Content-type: application/json' \
-            -d "$(jq -n \
-              --arg emoji "$EMOJI" \
-              --arg status "$STATUS" \
-              --arg workflow "Sync Patch Notes" \
-              --arg trigger "${{ github.event_name }}" \
-              --arg url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-              --arg page "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" \
-              --arg log "$LOG_TEXT" \
-              '{text: "\($emoji) \($workflow) \($status)\n트리거: \($trigger)\n로그: \($url)\n```\n\($log)\n```\n\n🔗 사이트: \($page)"}')" || echo "Slack notification failed"
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
