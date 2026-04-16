@@ -1,0 +1,39 @@
+name: Claude Briefing
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Restore briefing state
+        uses: actions/cache/restore@v4
+        with:
+          path: .briefing-state
+          key: briefing-state-${{ github.run_id }}
+          restore-keys: briefing-state-
+
+      - name: Run briefing
+        run: bash scripts/claude-briefing.sh
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Save briefing state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .briefing-state
+          key: briefing-state-${{ github.run_id }}
