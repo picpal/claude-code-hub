@@ -117,9 +117,8 @@ echo "  Releases: done"
 # =============================================================
 # First-run detection: seed state without notification
 # =============================================================
-SEEN_LINES=$(wc -l < "$SEEN_FILE" | tr -d ' ')
-if [ "${BRIEFING_SEEDED:-}" != "true" ] && [ "$SEEN_LINES" -le "$NEW_COUNT" ] && [ "$NEW_COUNT" -gt 5 ]; then
-  echo "=== First run detected (${NEW_COUNT} items). Seeding state. No notification. ==="
+if [ ! -f "${STATE_DIR}/.seeded" ]; then
+  echo "=== First run detected (${NEW_COUNT} new items). Seeding state. ==="
   touch "${STATE_DIR}/.seeded"
   exit 0
 fi
@@ -197,10 +196,10 @@ else
 fi
 
 # =============================================================
-# Trim state file (keep last 500 entries)
+# Trim state file (keep last 1000 entries)
 # =============================================================
-if [ "$(wc -l < "$SEEN_FILE" | tr -d ' ')" -gt 500 ]; then
-  tail -300 "$SEEN_FILE" > "${SEEN_FILE}.tmp"
+if [ "$(wc -l < "$SEEN_FILE" | tr -d ' ')" -gt 1000 ]; then
+  tail -800 "$SEEN_FILE" > "${SEEN_FILE}.tmp"
   mv "${SEEN_FILE}.tmp" "$SEEN_FILE"
 fi
 

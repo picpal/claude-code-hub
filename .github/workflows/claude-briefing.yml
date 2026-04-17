@@ -5,6 +5,10 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
+concurrency:
+  group: briefing
+  cancel-in-progress: false
+
 permissions:
   contents: read
 
@@ -31,9 +35,20 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+      - name: Compute state hash
+        id: state-hash
+        if: always()
+        run: |
+          if [ -f .briefing-state/seen-urls.txt ]; then
+            HASH=$(sha256sum .briefing-state/seen-urls.txt | cut -d' ' -f1 | head -c 16)
+          else
+            HASH="empty"
+          fi
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
       - name: Save briefing state
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .briefing-state
-          key: briefing-state-${{ github.run_id }}
+          key: briefing-state-${{ steps.state-hash.outputs.hash }}
