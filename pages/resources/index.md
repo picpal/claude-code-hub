@@ -46,4 +46,9 @@ permalink: /pages/resources/
     <span class="card-title">Computer Use</span>
     <span class="card-desc">컴퓨터 사용 기능 가이드</span>
   </a>
+  <a href="{{ '/pages/resources/built-in-skills/' | relative_url }}" class="quick-link-card">
+    <span class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+    <span class="card-title">Built-in Skills</span>
+    <span class="card-desc">공식 내장 명령어 및 스킬 목록</span>
+  </a>
 </div>

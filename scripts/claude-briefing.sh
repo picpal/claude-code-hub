@@ -183,7 +183,7 @@ fi
 # =============================================================
 echo "=== Sending to Slack ==="
 if [ -n "${SLACK_WEBHOOK_URL:-}" ]; then
-  SLACK_TEXT="🤖 *Claude Ecosystem Briefing*\n\n${BRIEFING}"
+  SLACK_TEXT="🤖 *Claude Ecosystem Briefing*\n\n${BRIEFING}\n\n🔗 *사이트:* <https://picpal.github.io/claude-code-hub|Claude Code Hub>"
   curl -sf -X POST "$SLACK_WEBHOOK_URL" \
     -H 'Content-type: application/json' \
     -d "$(jq -n --arg text "$SLACK_TEXT" '{text: $text}')" \
