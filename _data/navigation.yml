@@ -17,6 +17,12 @@
       url: /pages/resources/custom-channels/
     - title: Computer Use
       url: /pages/resources/computer-use/
+    - title: Hooks
+      url: /pages/resources/hooks/
+    - title: Settings Guide
+      url: /pages/resources/settings-guide/
+    - title: Built-in Skills
+      url: /pages/resources/built-in-skills/
 
 - title: Tips & Tricks
   url: /pages/tips/
