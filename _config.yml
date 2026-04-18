@@ -39,3 +39,4 @@ exclude:
   - .claude/
   - .orchestra/
   - .github/
+  - .briefing-state/
