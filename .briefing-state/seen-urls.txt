@@ -464,3 +464,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.118
 https://github.com/anthropics/claude-code/releases/tag/v2.1.117
 https://github.com/anthropics/claude-code/releases/tag/v2.1.116
 https://github.com/anthropics/claude-code/releases/tag/v2.1.114
+https://www.anthropic.com/news/election-safeguards-update
+https://github.com/anthropics/claude-code/releases/tag/v2.1.119
+https://github.com/anthropics/claude-code/releases/tag/v2.1.118
+https://github.com/anthropics/claude-code/releases/tag/v2.1.117
+https://github.com/anthropics/claude-code/releases/tag/v2.1.116
+https://github.com/anthropics/claude-code/releases/tag/v2.1.114
