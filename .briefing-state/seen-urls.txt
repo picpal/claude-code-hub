@@ -753,3 +753,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.119
 https://github.com/anthropics/claude-code/releases/tag/v2.1.118
 https://github.com/anthropics/claude-code/releases/tag/v2.1.117
 https://github.com/anthropics/claude-code/releases/tag/v2.1.116
+https://claude.com/blog/multi-agent-coordination-patterns
+https://github.com/anthropics/claude-code/releases/tag/v2.1.122
+https://github.com/anthropics/claude-code/releases/tag/v2.1.121
+https://github.com/anthropics/claude-code/releases/tag/v2.1.119
+https://github.com/anthropics/claude-code/releases/tag/v2.1.118
+https://github.com/anthropics/claude-code/releases/tag/v2.1.117
