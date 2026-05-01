@@ -795,3 +795,11 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.122
 https://github.com/anthropics/claude-code/releases/tag/v2.1.121
 https://github.com/anthropics/claude-code/releases/tag/v2.1.119
 https://github.com/anthropics/claude-code/releases/tag/v2.1.118
+https://claude.com/blog/building-ai-agents-for-the-enterprise
+https://claude.com/blog/claude-security-public-beta
+https://claude.com/blog/how-kepler-built-verifiable-ai-for-financial-services-with-claude
+https://github.com/anthropics/claude-code/releases/tag/v2.1.126
+https://github.com/anthropics/claude-code/releases/tag/v2.1.123
+https://github.com/anthropics/claude-code/releases/tag/v2.1.122
+https://github.com/anthropics/claude-code/releases/tag/v2.1.121
+https://github.com/anthropics/claude-code/releases/tag/v2.1.119
