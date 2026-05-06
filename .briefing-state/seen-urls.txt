@@ -880,3 +880,10 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.126
 https://github.com/anthropics/claude-code/releases/tag/v2.1.123
 https://github.com/anthropics/claude-code/releases/tag/v2.1.122
 https://github.com/anthropics/claude-code/releases/tag/v2.1.121
+https://www.anthropic.com/news/finance-agents
+https://claude.com/blog/deploying-claude-across-financial-services
+https://github.com/anthropics/claude-code/releases/tag/v2.1.129
+https://github.com/anthropics/claude-code/releases/tag/v2.1.128
+https://github.com/anthropics/claude-code/releases/tag/v2.1.126
+https://github.com/anthropics/claude-code/releases/tag/v2.1.123
+https://github.com/anthropics/claude-code/releases/tag/v2.1.122
