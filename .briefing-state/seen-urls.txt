@@ -798,3 +798,16 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.137
 https://github.com/anthropics/claude-code/releases/tag/v2.1.136
 https://github.com/anthropics/claude-code/releases/tag/v2.1.133
 https://github.com/anthropics/claude-code/releases/tag/v2.1.132
+https://www.anthropic.com/news/claude-design-anthropic-labs
+https://www.anthropic.com/news/claude-is-a-space-to-think
+https://www.anthropic.com/news/claude-opus-4-7
+https://claude.com/blog/claude-builds-visuals
+https://claude.com/blog/claude-code-desktop-redesign
+https://claude.com/blog/claude-managed-agents
+https://claude.com/blog/harnessing-claudes-intelligence
+https://claude.com/blog/how-enterprises-are-building-ai-agents-in-2026
+https://github.com/anthropics/claude-code/releases/tag/v2.1.138
+https://github.com/anthropics/claude-code/releases/tag/v2.1.137
+https://github.com/anthropics/claude-code/releases/tag/v2.1.136
+https://github.com/anthropics/claude-code/releases/tag/v2.1.133
+https://github.com/anthropics/claude-code/releases/tag/v2.1.132
