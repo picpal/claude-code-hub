@@ -855,3 +855,10 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.139
 https://github.com/anthropics/claude-code/releases/tag/v2.1.138
 https://github.com/anthropics/claude-code/releases/tag/v2.1.137
 https://github.com/anthropics/claude-code/releases/tag/v2.1.136
+https://www.anthropic.com/news/claude-for-small-business
+https://claude.com/blog/best-practices-for-computer-and-browser-use-with-claude
+https://github.com/anthropics/claude-code/releases/tag/v2.1.141
+https://github.com/anthropics/claude-code/releases/tag/v2.1.140
+https://github.com/anthropics/claude-code/releases/tag/v2.1.139
+https://github.com/anthropics/claude-code/releases/tag/v2.1.138
+https://github.com/anthropics/claude-code/releases/tag/v2.1.137
