@@ -948,3 +948,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.144
 https://github.com/anthropics/claude-code/releases/tag/v2.1.143
 https://github.com/anthropics/claude-code/releases/tag/v2.1.142
 https://github.com/anthropics/claude-code/releases/tag/v2.1.141
+https://www.anthropic.com/news/widening-conversation-ai
+https://github.com/anthropics/claude-code/releases/tag/v2.1.145
+https://github.com/anthropics/claude-code/releases/tag/v2.1.144
+https://github.com/anthropics/claude-code/releases/tag/v2.1.143
+https://github.com/anthropics/claude-code/releases/tag/v2.1.142
+https://github.com/anthropics/claude-code/releases/tag/v2.1.141
