@@ -808,3 +808,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.147
 https://github.com/anthropics/claude-code/releases/tag/v2.1.146
 https://github.com/anthropics/claude-code/releases/tag/v2.1.145
 https://github.com/anthropics/claude-code/releases/tag/v2.1.144
+https://claude.com/blog/how-an-anthropic-sales-leader-uses-claude-cowork-to-run-a-4-000-account-book
+https://github.com/anthropics/claude-code/releases/tag/v2.1.149
+https://github.com/anthropics/claude-code/releases/tag/v2.1.148
+https://github.com/anthropics/claude-code/releases/tag/v2.1.147
+https://github.com/anthropics/claude-code/releases/tag/v2.1.146
+https://github.com/anthropics/claude-code/releases/tag/v2.1.145
