@@ -169,4 +169,4 @@ Claude가 화면을 캡처하므로, 비밀번호 관리자, 금융 앱, 개인 
 
 ## 참고 자료
 
-- [공식 문서: Let Claude use your computer](https://code.claude.com/docs/en/desktop#let-claude-use-your-computer)
+- [공식 문서: Computer use](https://code.claude.com/docs/en/computer-use)

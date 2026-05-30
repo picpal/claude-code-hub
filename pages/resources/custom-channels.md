@@ -664,6 +664,6 @@ curl -X POST http://localhost:3100/webhook \
 | 자료 | 링크 |
 |------|------|
 | MCP 공식 스펙 | [modelcontextprotocol.io](https://modelcontextprotocol.io) |
-| Claude Code 공식 문서 | [docs.anthropic.com/claude-code](https://docs.anthropic.com/en/docs/claude-code) |
+| Claude Code 공식 문서 | [code.claude.com/docs](https://code.claude.com/docs/en/overview) |
 | 공식 플러그인 저장소 | [github.com/anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) |
 | Discord 연동 가이드 | [Discord Integration](/pages/resources/discord-integration/) |

@@ -144,7 +144,7 @@ Built-in과 달리 프롬프트 기반으로 동작하며, 코드 패턴 감지 
 | `/schedule [description]` | 원격 에이전트 cron 스케줄링 | 정기 작업 설정 |
 | `/claude-api` | Claude API 레퍼런스 자동 로드 (Python, TS, Java, Go) | API 앱 개발 |
 | `/debug [description]` | 세션 debug logging 활성화 및 issue 분석 | 문제 디버깅 |
-| `/less-permission-prompts` | 기존 호출 스캔 후 읽기 전용 호출 allowlist 추가 | 권한 프롬프트 감소 |
+| `/fewer-permission-prompts` | 기존 호출 스캔 후 읽기 전용 호출 allowlist 추가 | 권한 프롬프트 감소 |
 | `/autofix-pr [prompt]` | 웹 세션이 PR 감시하며 CI 실패/리뷰에 자동 수정 | PR 자동 수정 |
 | `/ultraplan <prompt>` | ultraplan 세션 — 계획 초안, 브라우저 검토, 원격 실행 | 고급 계획 수립 |
 | `/ultrareview [PR]` | 클라우드 샌드박스에서 다중에이전트 코드 리뷰 | 상세 리뷰 (3회 무료) |
@@ -163,5 +163,5 @@ Built-in과 달리 프롬프트 기반으로 동작하며, 코드 패턴 감지 
 
 ## 참고 자료
 
-- [공식 문서: CLI Usage](https://docs.anthropic.com/en/docs/claude-code/cli-usage)
+- [공식 문서: CLI Usage](https://code.claude.com/docs/en/cli-usage)
 - [공식 문서: Skills](https://code.claude.com/docs/en/skills)

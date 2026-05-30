@@ -30,13 +30,14 @@ Model Context Protocol(MCP)은 Claude Code가 외부 도구 및 데이터 소스
 
 ## 전송 방식 (Transport Types)
 
-MCP 서버는 세 가지 전송 방식을 지원합니다:
+MCP 서버는 네 가지 전송 방식을 지원합니다:
 
 | 전송 방식 | 설명 | 사용 사례 |
 |-----------|------|-----------|
 | **stdio** | 로컬 프로세스로 실행, 표준 입출력으로 통신 | NPM 패키지, 로컬 도구, Python 스크립트 |
 | **http** | HTTP를 통한 원격 서버 통신 (권장) | 원격/호스팅 서비스, SaaS 연동 |
 | **sse** | Server-Sent Events 기반 스트리밍 (deprecated) | 레거시 서버 (가능하면 http 사용 권장) |
+| **ws** | WebSocket 영속 양방향 연결 (서버가 이벤트를 푸시) | OAuth·`--transport` 미지원, `.mcp.json`/`add-json`으로만 설정 |
 
 ---
 
@@ -228,11 +229,12 @@ Claude Code 실행 중에는 `/mcp` 명령어로 현재 연결된 MCP 서버 상
 |------|------|-----------|------------|
 | filesystem | 파일 시스템 접근 | stdio | `claude mcp add --transport stdio filesystem -- npx -y @modelcontextprotocol/server-filesystem` |
 | github | GitHub API 연동 | http | `claude mcp add --transport http github https://api.githubcopilot.com/mcp/` |
-| postgres | PostgreSQL DB | stdio | `claude mcp add --transport stdio postgres -- npx -y @modelcontextprotocol/server-postgres` |
-| slack | Slack 메시지 연동 | stdio | `claude mcp add --transport stdio slack -- npx -y @anthropic/mcp-server-slack` |
-| puppeteer | 브라우저 자동화 | stdio | `claude mcp add --transport stdio puppeteer -- npx -y @anthropic/mcp-server-puppeteer` |
 | sentry | 에러 모니터링 | http | `claude mcp add --transport http sentry https://mcp.sentry.dev/mcp` |
 | notion | Notion 워크스페이스 | http | `claude mcp add --transport http notion https://mcp.notion.com/mcp` |
+| playwright | 브라우저 자동화 | stdio | `claude mcp add --transport stdio playwright -- npx -y @playwright/mcp@latest` |
+| postgres | PostgreSQL DB | stdio | `claude mcp add --transport stdio postgres -- npx -y @crystaldba/postgres-mcp` |
+
+> **공식 레퍼런스 서버 변경**: Anthropic의 초기 레퍼런스 서버 중 `postgres`·`slack`·`puppeteer`·`github` 등은 2025년에 npm deprecated 처리되어 [servers-archived](https://github.com/modelcontextprotocol/servers-archived)로 이관되었습니다. 위 표의 `postgres`·`playwright`는 현재 유지보수되는 대체 서버입니다. 현재 활성 레퍼런스 서버(filesystem·git·fetch·memory·time 등)와 검증된 커넥터는 [modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)와 [Anthropic 커넥터 디렉토리](https://claude.ai/directory)를 참고하세요. (`@anthropic/mcp-server-*` 형식의 npm 패키지는 존재하지 않습니다 — Anthropic 자사 커넥터는 호스팅 원격 서버로 제공됩니다.)
 
 ---
 
@@ -269,7 +271,7 @@ claude mcp add --transport http my-api https://api.example.com/mcp \
   --header "Authorization: Bearer your-token"
 ```
 
-환경 변수를 활용한 헤더 설정도 가능합니다. `headersHelper` 환경 변수를 통해 동적으로 인증 토큰을 생성할 수 있습니다.
+환경 변수를 활용한 헤더 설정도 가능합니다. 서버 설정의 `headersHelper` 필드(연결 시 실행되는 명령)를 통해 동적으로 인증 헤더를 생성할 수 있습니다.
 
 ---
 
@@ -294,7 +296,7 @@ Enterprise/Team 환경에서는 시스템 수준의 `managed-mcp.json` 파일로
 |--------|----------|
 | macOS | `/Library/Application Support/ClaudeCode/managed-mcp.json` |
 | Linux | `/etc/claude-code/managed-mcp.json` |
-| Windows | `%ProgramData%\ClaudeCode\managed-mcp.json` |
+| Windows | `C:\Program Files\ClaudeCode\managed-mcp.json` |
 
 관리 정책과 함께 `allowManagedMcpServersOnly: true`를 설정하면, 관리자가 승인한 MCP 서버만 사용할 수 있도록 제한됩니다.
 
@@ -305,4 +307,4 @@ Enterprise/Team 환경에서는 시스템 수준의 `managed-mcp.json` 파일로
 | 변수 | 설명 | 기본값 |
 |------|------|--------|
 | `MCP_TIMEOUT` | MCP 서버 시작 타임아웃 | - |
-| `MAX_MCP_OUTPUT_TOKENS` | 출력 토큰 경고 임계값 | 10,000 |
+| `MAX_MCP_OUTPUT_TOKENS` | 최대 MCP 출력 토큰 | 25,000 (경고 임계값 10,000) |
