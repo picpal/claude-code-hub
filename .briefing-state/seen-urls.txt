@@ -838,3 +838,10 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.160
 https://github.com/anthropics/claude-code/releases/tag/v2.1.159
 https://github.com/anthropics/claude-code/releases/tag/v2.1.158
 https://github.com/anthropics/claude-code/releases/tag/v2.1.157
+https://www.anthropic.com/news/AI-enabled-cyber-threats-mitre-attack
+https://www.anthropic.com/news/services-track-partner-hub
+https://github.com/anthropics/claude-code/releases/tag/v2.1.161
+https://github.com/anthropics/claude-code/releases/tag/v2.1.160
+https://github.com/anthropics/claude-code/releases/tag/v2.1.159
+https://github.com/anthropics/claude-code/releases/tag/v2.1.158
+https://github.com/anthropics/claude-code/releases/tag/v2.1.157
