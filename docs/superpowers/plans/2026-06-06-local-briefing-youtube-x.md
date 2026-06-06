@@ -1223,3 +1223,7 @@ git commit -m "chore(briefing): 로컬 스케줄러 전환 — 클라우드 cron
 Plan complete and saved to `docs/superpowers/plans/2026-06-06-local-briefing-youtube-x.md`.
 
 **주의(중요)**: Task 2(X spike)와 Task 4 Step 5(실 X 호출), Task 6 Step 2(채널 id 해석)는 **로그인 세션·실네트워크가 필요한 수동/대화형 단계**다. 서브에이전트 자동 실행 시 이 단계들은 사용자 개입(쿠키 추출, cURL 캡처)이 필요하므로 해당 task에서 일시정지하고 사용자에게 입력을 요청해야 한다.
+
+---
+
+> **구현 후 변경(2026-06-07)**: 실제 구현은 이 계획의 일부에서 벗어났다 — X 쿠키는 파일이 아니라 `browser_cookie3` 런타임 읽기, Python은 시스템이 아니라 레포 `.venv`, X 실패는 exit 2로 브리핑에 가시화, `launchctl`/쿠키/queryId 추출은 보안 훅 때문에 사용자가 직접 실행. 권위 있는 최신 기록은 **spec 문서 §15 "구현 변경사항"** 참조.
