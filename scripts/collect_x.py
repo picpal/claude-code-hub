@@ -132,22 +132,28 @@ def read_creators():
 
 
 def main() -> int:
+    """Print X item lines. Exit 0 on success (incl. legit 'no new posts');
+    exit 2 when X is non-functional (no cookies/endpoints, or every handle errored)
+    so the orchestrator can surface a visible failure instead of a silent empty section."""
     cookies = load_cookies()
     if not cookies.get("auth_token") or not cookies.get("ct0"):
         print(
-            "WARN: X cookies missing/expired — re-export to ~/.briefing/x_cookies.txt",
+            "WARN: X cookies missing/expired — log into x.com (or re-export ~/.briefing/x_cookies.txt)",
             file=sys.stderr,
         )
-        return 0
+        return 2
     endpoints = load_endpoints()
     if not endpoints:
-        print("WARN: scripts/x_endpoints.json missing — run Task 2 spike", file=sys.stderr)
-        return 0
+        print("WARN: scripts/x_endpoints.json missing — capture query_id/features", file=sys.stderr)
+        return 2
     session = make_session(cookies)
+    attempted = errored = 0
     for name, handle in read_creators():
+        attempted += 1
         try:
             uid = get_user_id(session, endpoints, handle)
             if not uid:
+                errored += 1
                 print(f"WARN: could not resolve @{handle}", file=sys.stderr)
                 continue
             for tw in get_tweets(session, endpoints, uid):
@@ -156,13 +162,18 @@ def main() -> int:
                 print(to_tsv_line("x", f"@{handle}", clean_text(tw["text"], 120), tw["url"], tw["text"]))
             time.sleep(1)
         except requests.HTTPError as e:
+            errored += 1
             code = e.response.status_code if e.response is not None else "?"
             print(f"WARN: X fetch @{handle} failed (HTTP {code})", file=sys.stderr)
             if str(code) in ("401", "403"):
-                print("WARN: X auth invalid — re-export cookies", file=sys.stderr)
+                print("WARN: X auth invalid — re-login / re-export cookies", file=sys.stderr)
                 break
         except Exception as e:  # noqa: BLE001 — collector must never crash the pipeline
+            errored += 1
             print(f"WARN: X fetch @{handle} error: {e}", file=sys.stderr)
+    if attempted and errored == attempted:
+        print("WARN: all X handles failed — query_id may need refresh", file=sys.stderr)
+        return 2
     return 0
 
 
