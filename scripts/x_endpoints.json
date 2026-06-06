@@ -1,0 +1,12 @@
+{
+  "UserByScreenName": {
+    "query_id": "PASTE_QUERY_ID",
+    "op_name": "UserByScreenName",
+    "features": {}
+  },
+  "UserTweets": {
+    "query_id": "PASTE_QUERY_ID",
+    "op_name": "UserTweets",
+    "features": {}
+  }
+}

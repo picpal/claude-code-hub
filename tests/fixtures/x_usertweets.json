@@ -1,0 +1,59 @@
+{
+  "data": {
+    "user": {
+      "result": {
+        "rest_id": "111",
+        "timeline_v2": {
+          "timeline": {
+            "instructions": [
+              {
+                "type": "TimelineAddEntries",
+                "entries": [
+                  {
+                    "entryId": "tweet-1001",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "itemContent": {
+                        "tweet_results": {
+                          "result": {
+                            "__typename": "Tweet",
+                            "rest_id": "1001",
+                            "core": { "user_results": { "result": { "legacy": { "screen_name": "karpathy" } } } },
+                            "legacy": {
+                              "full_text": "Thoughts on scaling laws and LLMs.",
+                              "created_at": "Sat Jun 06 08:00:00 +0000 2026"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "entryId": "tweet-1002",
+                    "content": {
+                      "entryType": "TimelineTimelineItem",
+                      "itemContent": {
+                        "tweet_results": {
+                          "result": {
+                            "__typename": "Tweet",
+                            "rest_id": "1002",
+                            "core": { "user_results": { "result": { "legacy": { "screen_name": "karpathy" } } } },
+                            "legacy": {
+                              "full_text": "@someone a reply tweet",
+                              "created_at": "Sat Jun 06 09:00:00 +0000 2026",
+                              "in_reply_to_status_id_str": "999"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
