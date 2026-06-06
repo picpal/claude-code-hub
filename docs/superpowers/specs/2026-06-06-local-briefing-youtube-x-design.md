@@ -200,6 +200,17 @@ Haiku 시스템 프롬프트를 확장해 카테고리별 고정 섹션을 렌�
 
 ## 14. 오픈 이슈 (구현 중 확정)
 
-1. X 내부 엔드포인트 정확한 경로/queryId/web bearer — spike에서 캡처.
-2. 쿠키 추출 1회 절차의 구체 수단(수동 복사 vs 헬퍼 스크립트) — spike 결과에 따라 결정.
+1. X 내부 엔드포인트 정확한 경로/queryId/web bearer — spike에서 캡처. ✅ 해결(§15).
+2. 쿠키 추출 1회 절차의 구체 수단(수동 복사 vs 헬퍼 스크립트) — spike 결과에 따라 결정. ✅ 해결(§15).
 3. launchd 누락 실행 처리 정책의 세부(기상 시 즉시 vs 다음 정시) — 구현 시 결정.
+
+## 15. 구현 변경사항 (Implementation deltas, 2026-06-07)
+
+설계 후 구현 중 확정/변경된 사항. 본문(§5.3, §5.6 등)보다 이 절이 우선한다.
+
+- **X 쿠키: 파일 → 런타임 브라우저 읽기.** §5.3의 "파일 1회 추출" 대신, 사용자 선택으로 youtube-study-notes와 동일하게 **`collect_x.py`가 실행 시 `browser_cookie3`로 로그인된 Chrome 세션에서 `auth_token`/`ct0`를 직접 읽어 in-flight로만 사용**(절대 파일로 덤프·로그하지 않음). `~/.briefing/x_cookies.txt`는 폴백으로 유지(`_cookies_from_file`).
+- **Python 실행환경: 시스템 → 레포 venv.** `browser_cookie3` 의존성 + launchd 무인 실행 견고성을 위해 레포 `.venv`(requests + browser_cookie3) 사용. 오케스트레이터·plist는 **절대경로 `.venv/bin/python`** 호출. 테스트는 시스템 pytest 유지(`browser_cookie3`는 지연 import라 영향 없음). `.venv/`는 gitignore.
+- **X 엔드포인트.** `scripts/x_endpoints.json`에 실 query_id + features + field_toggles 저장(캡처 기반). 파서는 응답이 `timeline_v2` 또는 `timeline`, screen_name이 `core` 또는 `legacy` 어느 쪽이든, 모듈(`TimelineTimelineModule`) 엔트리까지 처리하도록 보강.
+- **X 실패 가시화.** `collect_x.py`는 쿠키/엔드포인트 부재 또는 전 핸들 실패 시 **exit 2** 반환 → 오케스트레이터가 브리핑에 `⚠️ X 수집 실패` 한 줄을 노출(stderr만이 아님). query_id는 수개월마다 회전하므로 갱신 신호로 활용.
+- **launchctl은 사용자 실행.** 프로젝트 보안 훅이 자격증명/X 식별자 추출 및 LaunchAgent 조작 bash 명령을 차단하므로, 쿠키 추출·query_id 추출·`launchctl load/kickstart`는 어시스턴트가 직접 실행하지 못하고 **사용자가 수행**한다. plist 파일은 `~/Library/LaunchAgents/`에 생성되어 있고 로드만 사용자 몫.
+- **남은 사용자 작업.** (1) `.env` 생성(키 입력), (2) `launchctl load -w ~/Library/LaunchAgents/com.claudehub.briefing.plist`, (3) `launchctl kickstart -k gui/$(id -u)/com.claudehub.briefing` 1회 후 `.briefing-state/launchd.out.log`에서 X 라인 유무로 **launchd 컨텍스트 Keychain 접근 검증**(실패 시 쿠키 파일 폴백 사용).

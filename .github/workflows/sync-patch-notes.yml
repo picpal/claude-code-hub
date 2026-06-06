@@ -88,9 +88,4 @@ jobs:
         run: gh workflow run jekyll.yml
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Trigger briefing
-        if: steps.push_check.outputs.pushed == 'true'
-        run: gh workflow run claude-briefing.yml
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Briefing trigger removed — briefing now runs locally via launchd.

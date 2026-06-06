@@ -1,8 +1,8 @@
 name: Claude Briefing
 
 on:
-  schedule:
-    - cron: '0 4,9,13 * * *'
+  # Cron disabled — briefing now runs locally via launchd (09:00/15:00 KST).
+  # Kept for manual debug only. See scripts/local-briefing.sh.
   workflow_dispatch:
 
 concurrency:
