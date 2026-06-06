@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Collect recent original X posts from creators in config/creators.tsv.
 
-Outputs TSV item lines (category=x) to stdout. Auth via ~/.briefing/x_cookies.txt.
+Outputs TSV item lines (category=x) to stdout. Auth reuses the logged-in browser
+session (browser_cookie3, like yt-dlp), falling back to ~/.briefing/x_cookies.txt.
+Cookie values are used in-flight for requests only and are never written or logged.
 """
 from __future__ import annotations
 
@@ -33,7 +35,31 @@ def load_endpoints() -> dict:
 
 
 def load_cookies() -> dict:
-    """Read 'name=value' lines (auth_token, ct0) from the cookie file."""
+    """Get X auth cookies. Prefer the logged-in browser session; fall back to a file."""
+    jar = _cookies_from_browser()
+    if jar.get("auth_token") and jar.get("ct0"):
+        return jar
+    return _cookies_from_file()
+
+
+def _cookies_from_browser() -> dict:
+    """Read x.com auth_token/ct0 from the logged-in Chrome session (lazy dep)."""
+    try:
+        import browser_cookie3
+    except ImportError:
+        return {}
+    jar = {}
+    try:
+        for c in browser_cookie3.chrome(domain_name="x.com"):
+            if c.name in ("auth_token", "ct0"):
+                jar[c.name] = c.value
+    except Exception as e:  # noqa: BLE001 — browser/Keychain access may fail
+        print(f"WARN: browser cookie read failed: {e}", file=sys.stderr)
+    return jar
+
+
+def _cookies_from_file() -> dict:
+    """Fallback: read 'name=value' lines (auth_token, ct0) from the cookie file."""
     jar = {}
     if not COOKIE_FILE.exists():
         return jar
@@ -66,6 +92,8 @@ def make_session(cookies: dict) -> requests.Session:
 
 def _gql(session: requests.Session, ep: dict, variables: dict) -> dict:
     params = {"variables": json.dumps(variables), "features": json.dumps(ep.get("features", {}))}
+    if ep.get("field_toggles"):
+        params["fieldToggles"] = json.dumps(ep["field_toggles"])
     url = f"https://x.com/i/api/graphql/{ep['query_id']}/{ep['op_name']}"
     r = session.get(url, params=params, timeout=20)
     r.raise_for_status()
@@ -73,7 +101,8 @@ def _gql(session: requests.Session, ep: dict, variables: dict) -> dict:
 
 
 def get_user_id(session, endpoints, handle):
-    return parse_user_id(_gql(session, endpoints["UserByScreenName"], {"screen_name": handle}))
+    variables = {"screen_name": handle, "withGrokTranslatedBio": True}
+    return parse_user_id(_gql(session, endpoints["UserByScreenName"], variables))
 
 
 def get_tweets(session, endpoints, user_id):

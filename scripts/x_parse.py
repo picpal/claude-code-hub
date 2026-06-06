@@ -13,11 +13,18 @@ def parse_user_id(payload: dict) -> str | None:
         return None
 
 
+def _unwrap(res: dict) -> dict:
+    if res.get("__typename") == "TweetWithVisibilityResults":
+        return res.get("tweet", res)
+    return res
+
+
 def _iter_tweet_results(payload: dict):
     try:
-        instructions = (
-            payload["data"]["user"]["result"]["timeline_v2"]["timeline"]["instructions"]
-        )
+        result = payload["data"]["user"]["result"]
+        # X serves the timeline under "timeline_v2" or (newer) "timeline".
+        timeline = result.get("timeline_v2") or result.get("timeline") or {}
+        instructions = timeline["timeline"]["instructions"]
     except (KeyError, TypeError):
         return
     for ins in instructions:
@@ -25,14 +32,34 @@ def _iter_tweet_results(payload: dict):
             continue
         for entry in ins.get("entries", []):
             content = entry.get("content", {})
-            if content.get("entryType") != "TimelineTimelineItem":
-                continue
-            res = content.get("itemContent", {}).get("tweet_results", {}).get("result")
-            if not res:
-                continue
-            if res.get("__typename") == "TweetWithVisibilityResults":
-                res = res.get("tweet", res)
-            yield res
+            etype = content.get("entryType")
+            if etype == "TimelineTimelineItem":
+                res = content.get("itemContent", {}).get("tweet_results", {}).get("result")
+                if res:
+                    yield _unwrap(res)
+            elif etype == "TimelineTimelineModule":
+                for it in content.get("items", []):
+                    res = (
+                        it.get("item", {})
+                        .get("itemContent", {})
+                        .get("tweet_results", {})
+                        .get("result")
+                    )
+                    if res:
+                        yield _unwrap(res)
+
+
+def _screen_name(res: dict) -> str:
+    try:
+        ur = res["core"]["user_results"]["result"]
+    except (KeyError, TypeError):
+        return ""
+    # Newer X nests screen_name under "core"; older under "legacy".
+    return (
+        (ur.get("core") or {}).get("screen_name")
+        or (ur.get("legacy") or {}).get("screen_name")
+        or ""
+    )
 
 
 def parse_tweets(payload: dict) -> list[dict]:
@@ -50,10 +77,7 @@ def parse_tweets(payload: dict) -> list[dict]:
             created = datetime.strptime(created_raw, X_TIME_FMT).astimezone(timezone.utc)
         except (TypeError, ValueError):
             continue
-        try:
-            screen = res["core"]["user_results"]["result"]["legacy"]["screen_name"]
-        except (KeyError, TypeError):
-            screen = ""
+        screen = _screen_name(res)
         if not tid or not screen:
             continue
         out.append(

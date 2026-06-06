@@ -28,3 +28,8 @@ node_modules/
 
 # Logs
 *.log
+
+# Python venv (briefing)
+.venv/
+__pycache__/
+.pytest_cache/
