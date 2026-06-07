@@ -18,6 +18,14 @@ def test_to_tsv_line_has_five_fields_and_no_embedded_tabs():
     assert "\t" not in parts[2]
 
 
+def test_to_tsv_line_strips_embedded_newlines():
+    # An embedded newline (in any field, incl. URL) must not break the single-line TSV record.
+    line = bl.to_tsv_line("x", "@h", "ti\ntle", "http://u/\npath", "a\r\nb")
+    assert "\n" not in line and "\r" not in line
+    assert line.count("\t") == 4  # exactly 5 fields → 4 separators
+    assert line.split("\t")[3] == "http://u/path"  # URL whitespace fully removed
+
+
 def test_within_last_hours_boundaries():
     now = datetime(2026, 6, 6, 12, 0, tzinfo=timezone.utc)
     inside = datetime(2026, 6, 6, 1, 0, tzinfo=timezone.utc)

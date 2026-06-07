@@ -14,15 +14,16 @@ def clean_text(text: str, limit: int = 280) -> str:
 
 
 def to_tsv_line(category: str, source: str, title: str, url: str, meta: str = "") -> str:
-    """Render one item as a tab-separated line with no embedded tabs."""
+    """Render one item as a tab-separated line with no embedded tabs or newlines."""
     fields = [
         clean_text(category, 32),
         clean_text(source, 120),
         clean_text(title, 200),
-        url.strip(),
+        "".join(url.split()),  # URLs carry no whitespace; strip embedded \n/\t so TSV rows stay intact
         clean_text(meta, 500),
     ]
-    return "\t".join(f.replace("\t", " ") for f in fields)
+    # Guard every field against embedded tabs/newlines that would corrupt the TSV record.
+    return "\t".join(f.replace("\t", " ").replace("\n", " ").replace("\r", " ") for f in fields)
 
 
 def within_last_hours(dt: datetime, hours: int, now: datetime | None = None) -> bool:

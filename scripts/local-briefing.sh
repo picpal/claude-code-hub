@@ -82,7 +82,9 @@ done < <(echo "$HN_RESULT" | jq -c '.hits[]' 2>/dev/null || true)
 
 # ---- Source 4: GitHub Releases ----
 echo "=== GitHub releases ==="
-RELEASES=$(curl -sf --connect-timeout 10 -m 30 -H "Accept: application/vnd.github+json" ${GITHUB_TOKEN:+-H "Authorization: Bearer $GITHUB_TOKEN"} "https://api.github.com/repos/anthropics/claude-code/releases?per_page=5" 2>/dev/null || echo "[]")
+GH_AUTH=()
+[ -n "${GITHUB_TOKEN:-}" ] && GH_AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN")
+RELEASES=$(curl -sf --connect-timeout 10 -m 30 -H "Accept: application/vnd.github+json" "${GH_AUTH[@]+"${GH_AUTH[@]}"}" "https://api.github.com/repos/anthropics/claude-code/releases?per_page=5" 2>/dev/null || echo "[]")
 while read -r release; do
   [ -z "$release" ] || [ "$release" = "null" ] && continue
   TAG=$(echo "$release" | jq -r '.tag_name')
@@ -150,7 +152,7 @@ if [ "$NEW_COUNT" -gt 0 ]; then
   BRIEFING_RESPONSE=$(curl -s --connect-timeout 10 -m 120 -X POST "https://api.anthropic.com/v1/messages" \
     -H "x-api-key: ${ANTHROPIC_API_KEY:-}" -H "anthropic-version: 2023-06-01" -H "content-type: application/json" \
     -d "$(jq -n --arg system "$SYSTEM_PROMPT" --arg items "$RAW_ITEMS" \
-      '{model:"claude-haiku-4-5-20251001",max_tokens:2048,system:$system,messages:[{role:"user",content:("다음 항목들로 브리핑을 작성해줘:\n\n"+$items)}]}')" 2>&1) || true
+      '{model:"claude-haiku-4-5-20251001",max_tokens:2048,system:$system,messages:[{role:"user",content:("다음 항목들로 브리핑을 작성해줘:\n\n"+$items)}]}')" 2>>"$STATE_DIR/collect.log") || true
   if echo "$BRIEFING_RESPONSE" | jq -e '.content[0].text' >/dev/null 2>&1; then
     BRIEFING=$(echo "$BRIEFING_RESPONSE" | jq -r '.content[0].text')
   else
