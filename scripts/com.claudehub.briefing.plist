@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Reference copy. Install to ~/Library/LaunchAgents/ and load with:
-     launchctl load -w ~/Library/LaunchAgents/com.claudehub.briefing.plist
-     Paths are user-specific (picpal); adjust if the repo moves. -->
+<!-- Reference copy. The briefing RUNTIME lives OUTSIDE ~/Desktop because macOS TCC
+     blocks launchd from Desktop/Documents/Downloads. Deploy with:
+       bash scripts/deploy-local.sh          # copies runtime + venv to ~/claudehub-briefing
+       cp scripts/com.claudehub.briefing.plist ~/Library/LaunchAgents/   (or Write it there)
+       launchctl load -w ~/Library/LaunchAgents/com.claudehub.briefing.plist
+     Paths below point at the deployed runtime (~/claudehub-briefing), not the Desktop repo. -->
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -9,10 +12,10 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>/Users/picpal/Desktop/workspace/claude-code-hub/scripts/local-briefing.sh</string>
+    <string>/Users/picpal/claudehub-briefing/scripts/local-briefing.sh</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/Users/picpal/Desktop/workspace/claude-code-hub</string>
+  <string>/Users/picpal/claudehub-briefing</string>
   <key>EnvironmentVariables</key>
   <dict>
     <key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
@@ -24,8 +27,8 @@
     <dict><key>Hour</key><integer>15</integer><key>Minute</key><integer>0</integer></dict>
   </array>
   <key>StandardOutPath</key>
-  <string>/Users/picpal/Desktop/workspace/claude-code-hub/.briefing-state/launchd.out.log</string>
+  <string>/Users/picpal/claudehub-briefing/.briefing-state/launchd.out.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/picpal/Desktop/workspace/claude-code-hub/.briefing-state/launchd.err.log</string>
+  <string>/Users/picpal/claudehub-briefing/.briefing-state/launchd.err.log</string>
 </dict>
 </plist>
