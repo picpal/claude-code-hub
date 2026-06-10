@@ -976,3 +976,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.169
 https://github.com/anthropics/claude-code/releases/tag/v2.1.168
 https://github.com/anthropics/claude-code/releases/tag/v2.1.167
 https://github.com/anthropics/claude-code/releases/tag/v2.1.166
+https://claude.com/blog/introducing-dynamic-workflows-in-claude-code
+https://github.com/anthropics/claude-code/releases/tag/v2.1.170
+https://github.com/anthropics/claude-code/releases/tag/v2.1.169
+https://github.com/anthropics/claude-code/releases/tag/v2.1.168
+https://github.com/anthropics/claude-code/releases/tag/v2.1.167
+https://github.com/anthropics/claude-code/releases/tag/v2.1.166
