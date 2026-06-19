@@ -946,3 +946,11 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.179
 https://github.com/anthropics/claude-code/releases/tag/v2.1.178
 https://github.com/anthropics/claude-code/releases/tag/v2.1.177
 https://github.com/anthropics/claude-code/releases/tag/v2.1.176
+https://claude.com/blog/artifacts-in-claude-code
+https://claude.com/blog/enterprise-managed-auth
+https://claude.com/blog/meet-the-winners-of-built-with-opus-4-7-claude-code-hackathon
+https://github.com/anthropics/claude-code/releases/tag/v2.1.183
+https://github.com/anthropics/claude-code/releases/tag/v2.1.181
+https://github.com/anthropics/claude-code/releases/tag/v2.1.179
+https://github.com/anthropics/claude-code/releases/tag/v2.1.178
+https://github.com/anthropics/claude-code/releases/tag/v2.1.177
