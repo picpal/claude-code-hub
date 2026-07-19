@@ -939,3 +939,8 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.212
 https://github.com/anthropics/claude-code/releases/tag/v2.1.211
 https://github.com/anthropics/claude-code/releases/tag/v2.1.210
 https://github.com/anthropics/claude-code/releases/tag/v2.1.209
+https://github.com/anthropics/claude-code/releases/tag/v2.1.215
+https://github.com/anthropics/claude-code/releases/tag/v2.1.214
+https://github.com/anthropics/claude-code/releases/tag/v2.1.212
+https://github.com/anthropics/claude-code/releases/tag/v2.1.211
+https://github.com/anthropics/claude-code/releases/tag/v2.1.210
