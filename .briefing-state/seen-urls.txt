@@ -798,3 +798,12 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.221
 https://github.com/anthropics/claude-code/releases/tag/v2.1.220
 https://github.com/anthropics/claude-code/releases/tag/v2.1.219
 https://github.com/anthropics/claude-code/releases/tag/v2.1.218
+https://claude.com/blog/artifacts-in-claude-code
+https://claude.com/blog/claude-code-desktop-redesign
+https://claude.com/blog/claude-managed-agents
+https://claude.com/blog/harnessing-claudes-intelligence
+https://github.com/anthropics/claude-code/releases/tag/v2.1.222
+https://github.com/anthropics/claude-code/releases/tag/v2.1.221
+https://github.com/anthropics/claude-code/releases/tag/v2.1.220
+https://github.com/anthropics/claude-code/releases/tag/v2.1.219
+https://github.com/anthropics/claude-code/releases/tag/v2.1.218
