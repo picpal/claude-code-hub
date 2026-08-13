@@ -968,3 +968,9 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.229
 https://github.com/anthropics/claude-code/releases/tag/v2.1.228
 https://github.com/anthropics/claude-code/releases/tag/v2.1.227
 https://github.com/anthropics/claude-code/releases/tag/v2.1.226
+https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room
+https://github.com/anthropics/claude-code/releases/tag/v2.1.231
+https://github.com/anthropics/claude-code/releases/tag/v2.1.229
+https://github.com/anthropics/claude-code/releases/tag/v2.1.228
+https://github.com/anthropics/claude-code/releases/tag/v2.1.227
+https://github.com/anthropics/claude-code/releases/tag/v2.1.226
