@@ -798,3 +798,11 @@ https://github.com/anthropics/claude-code/releases/tag/v2.1.232
 https://github.com/anthropics/claude-code/releases/tag/v2.1.231
 https://github.com/anthropics/claude-code/releases/tag/v2.1.229
 https://github.com/anthropics/claude-code/releases/tag/v2.1.228
+https://www.anthropic.com/news/claude-sonnet-5
+https://www.anthropic.com/news/redeploying-fable-5
+https://claude.com/blog/claude-managed-agents-updates
+https://github.com/anthropics/claude-code/releases/tag/v2.1.233
+https://github.com/anthropics/claude-code/releases/tag/v2.1.232
+https://github.com/anthropics/claude-code/releases/tag/v2.1.231
+https://github.com/anthropics/claude-code/releases/tag/v2.1.229
+https://github.com/anthropics/claude-code/releases/tag/v2.1.228
