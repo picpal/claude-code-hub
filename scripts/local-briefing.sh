@@ -103,13 +103,8 @@ YT_OUT=$(mktemp)
 "$PY" "$SCRIPT_DIR/collect_youtube.py" >"$YT_OUT" 2>>"$STATE_DIR/collect.log" || true
 ingest_tsv < "$YT_OUT"; rm -f "$YT_OUT"
 
-# ---- Source 6: X (logged-in session cookies) ----
-echo "=== X ==="
-X_OUT=$(mktemp)
-X_RC=0
-"$PY" "$SCRIPT_DIR/collect_x.py" >"$X_OUT" 2>>"$STATE_DIR/collect.log" || X_RC=$?
-ingest_tsv < "$X_OUT"; rm -f "$X_OUT"
-[ "$X_RC" -eq 2 ] && X_FAILED=1
+# ---- Source 6: X — disabled (browser_cookie3 triggers Chrome Safe Storage keychain prompt) ----
+echo "=== X (disabled) ==="
 
 # ---- First-run seed ----
 if [ ! -f "${STATE_DIR}/.seeded" ]; then
